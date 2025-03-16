@@ -1,34 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+//import './App.css'
+import AppStyle from './AppStyle'
+import { useState } from "react";
+import HomePage from './pages/HomePage'
+import CategoryContent from './components/CategoryContent/CategoryContent'
+import OverlayDark from './components/OverlayContent/OverlayDark'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [IsOverlayVisible, setIsOverlayVisible] = useState(false);
 
+  const handleOverlay = ()=>{
+      setIsOverlayVisible(!IsOverlayVisible);
+    }
+
+    
+  
+  const restoreBackgroud = ()=>{
+    if(IsOverlayVisible == true) {
+      setIsOverlayVisible(false);
+    }
+  }
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <AppStyle onClick={()=>{restoreBackgroud()}}>
+      <HomePage handleOverlay={handleOverlay} />
+      {IsOverlayVisible && <OverlayDark/>}
+      {IsOverlayVisible && <CategoryContent isVisible={IsOverlayVisible} onClick={(e) => e.stopPropagation()}/>}
+      
+    </AppStyle>
   )
 }
 
